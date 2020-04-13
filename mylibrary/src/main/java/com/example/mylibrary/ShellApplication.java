@@ -33,11 +33,12 @@ public class ShellApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
-
         AES.init(getPassword());
+        //  /data/app/com.example.protectapp-FKwGvBrAMrh-F5Pk2akH9g==/base.apk
         File apkFile = new File(getApplicationInfo().sourceDir);
-        //data/data/包名/files/fake_apk/
+        //  /data/user/0/com.example.protectapp/app_fake_apk
         File unZipFile = getDir("fake_apk", MODE_PRIVATE);
+        //  /data/user/0/com.example.protectapp/app_fake_apk/app
         File app = new File(unZipFile, "app");
         if (!app.exists()) {
             Zip.unZip(apkFile, app);
@@ -157,13 +158,13 @@ public class ShellApplication extends Application {
             ArrayList suppressedExceptions = new ArrayList();
             Log.d(TAG, "Build.VERSION.SDK_INT " + Build.VERSION.SDK_INT);
             if (Build.VERSION.SDK_INT >= 23) {
-                expandFieldArray(dexPathList, "dexElements", makePathElements(dexPathList, new
-                                ArrayList(additionalClassPathEntries), optimizedDirectory,
-                        suppressedExceptions));
+                expandFieldArray(dexPathList, "dexElements",
+                        makePathElements(dexPathList, new ArrayList(additionalClassPathEntries),
+                                optimizedDirectory, suppressedExceptions));
             } else {
-                expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList, new
-                                ArrayList(additionalClassPathEntries), optimizedDirectory,
-                        suppressedExceptions));
+                expandFieldArray(dexPathList, "dexElements",
+                        makeDexElements(dexPathList, new ArrayList(additionalClassPathEntries),
+                                optimizedDirectory, suppressedExceptions));
             }
 
             if (suppressedExceptions.size() > 0) {
@@ -181,14 +182,12 @@ public class ShellApplication extends Application {
                 IOException[] dexElementsSuppressedExceptions1 = (IOException[]) ((IOException[])
                         suppressedExceptionsField1.get(loader));
                 if (dexElementsSuppressedExceptions1 == null) {
-                    dexElementsSuppressedExceptions1 = (IOException[]) suppressedExceptions
-                            .toArray(new IOException[suppressedExceptions.size()]);
+                    dexElementsSuppressedExceptions1 = (IOException[]) suppressedExceptions.toArray(new IOException[suppressedExceptions.size()]);
                 } else {
                     IOException[] combined = new IOException[suppressedExceptions.size() +
                             dexElementsSuppressedExceptions1.length];
                     suppressedExceptions.toArray(combined);
-                    System.arraycopy(dexElementsSuppressedExceptions1, 0, combined,
-                            suppressedExceptions.size(), dexElementsSuppressedExceptions1.length);
+                    System.arraycopy(dexElementsSuppressedExceptions1, 0, combined, suppressedExceptions.size(), dexElementsSuppressedExceptions1.length);
                     dexElementsSuppressedExceptions1 = combined;
                 }
 
@@ -203,10 +202,10 @@ public class ShellApplication extends Application {
                                                 ArrayList<IOException> suppressedExceptions) throws
                 IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
-            Method makeDexElements = findMethod(dexPathList, "makeDexElements", new
-                    Class[]{ArrayList.class, File.class, ArrayList.class});
-            return ((Object[]) makeDexElements.invoke(dexPathList, new Object[]{files,
-                    optimizedDirectory, suppressedExceptions}));
+            Method makeDexElements = findMethod(dexPathList, "makeDexElements",
+                    new Class[]{ArrayList.class, File.class, ArrayList.class});
+            return ((Object[]) makeDexElements.invoke(dexPathList,
+                    new Object[]{files, optimizedDirectory, suppressedExceptions}));
         }
     }
 

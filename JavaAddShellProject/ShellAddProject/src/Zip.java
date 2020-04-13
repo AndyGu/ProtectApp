@@ -1,4 +1,4 @@
-package com.example.mylibrary;
+
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -11,6 +11,10 @@ import java.util.zip.CheckedOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+
+/**
+ * Created by xiang on 2017/5/17.
+ */
 
 public class Zip {
 
@@ -50,7 +54,8 @@ public class Zip {
     public static void zip(File dir, File zip) throws Exception {
         zip.delete();
         // 对输出文件做CRC32校验
-        CheckedOutputStream cos = new CheckedOutputStream(new FileOutputStream(zip), new CRC32());
+        CheckedOutputStream cos = new CheckedOutputStream(new FileOutputStream(
+                zip), new CRC32());
         ZipOutputStream zos = new ZipOutputStream(cos);
         compress(dir, zos, "");
         zos.flush();
@@ -83,6 +88,8 @@ public class Zip {
 
     private static void compressFile(File file, ZipOutputStream zos, String dir)
             throws Exception {
+
+
         String dirName = dir + file.getName();
 
         String[] dirNameNew = dirName.split("/");
@@ -101,7 +108,8 @@ public class Zip {
 
         ZipEntry entry = new ZipEntry(buffer.toString().substring(1));
         zos.putNextEntry(entry);
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(
+                file));
         int count;
         byte data[] = new byte[1024];
         while ((count = bis.read(data, 0, 1024)) != -1) {

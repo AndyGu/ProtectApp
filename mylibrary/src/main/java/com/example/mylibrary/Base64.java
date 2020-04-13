@@ -89,9 +89,10 @@ public final class Base64 {
         byte[] decodedBytes = bos.toByteArray();
         try {
             bos.close();
-            bos = null;
         } catch (IOException ex) {
             System.err.println("Error while decoding BASE64: " + ex.toString());
+        } finally {
+            bos = null;
         }
         return decodedBytes;
     }

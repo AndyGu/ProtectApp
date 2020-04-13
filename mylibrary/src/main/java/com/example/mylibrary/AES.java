@@ -65,22 +65,22 @@ public class AES {
 
     public static void main(String[] args) throws Exception {
 
-        File zip = new File("/Users/xiang/develop/app-debug.apk");
+        File zip = new File("/Users/penggu/Download/app-debug.apk");
         String absolutePath = zip.getAbsolutePath();
         File dir = new File(absolutePath.substring(0, absolutePath.lastIndexOf(".")));
         Zip.unZip(zip,dir);
 
-        File zip2 = new File("/Users/xiang/develop/app-debug2.apk");
+        File zip2 = new File("/Users/penggu/Download/app-debug2.apk");
         Zip.zip(dir,zip2);
 
         String[] argv = {
                 "jarsigner","-verbose", "-sigalg", "MD5withRSA",
                 "-digestalg", "SHA1",
-                "-keystore", "/Users/xiang/develop/debug.keystore",
+                "-keystore", "/Users/penggu/Download/debug.keystore",
                 "-storepass","android",
                 "-keypass", "android",
-                "-signedjar", "/Users/xiang/develop/app-debug2-sign.apk",
-                "/Users/xiang/develop/app-debug2.apk",
+                "-signedjar", "/Users/penggu/Download/app-debug2-sign.apk",
+                "/Users/penggu/Download/app-debug2.apk",
                 "androiddebugkey"
         };
         Process pro = null;
